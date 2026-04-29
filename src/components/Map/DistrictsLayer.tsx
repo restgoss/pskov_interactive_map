@@ -13,28 +13,7 @@ const FILL_DISABLED = 'pskov-districts-fill-disabled';
 // Theme-aware palette so borders and fills read well on both dark and
 // light basemaps. The light variant uses a deeper gold + higher fill
 // opacity, since faint gold gets washed out on light tiles.
-const PALETTE = {
-  dark: {
-    fillColor: '#d4a44a',
-    fillOpacitySelected: 0.4,
-    fillOpacityHover: 0.25,
-    fillOpacityIdle: 0.08,
-    outlineColor: '#d4a44a',
-    outlineDisabledColor: 'rgba(120,120,120,0.4)',
-    disabledFillColor: '#5a5a5a',
-    disabledFillOpacity: 0.25,
-  },
-  light: {
-    fillColor: '#a06a1f',
-    fillOpacitySelected: 0.45,
-    fillOpacityHover: 0.3,
-    fillOpacityIdle: 0.12,
-    outlineColor: '#7a4f17',
-    outlineDisabledColor: 'rgba(80,80,80,0.55)',
-    disabledFillColor: '#888888',
-    disabledFillOpacity: 0.35,
-  },
-} as const;
+
 
 interface Props {
   map: MlMap | null;
@@ -45,7 +24,6 @@ export function DistrictsLayer({ map, isStyleLoaded }: Props) {
   const setSelectedDistrict = useUiStore((s) => s.setSelectedDistrict);
   const selectedDistrict = useUiStore((s) => s.selectedDistrict);
   const setDistrictsReady = useUiStore((s) => s.setDistrictsReady);
-  const theme = useUiStore((s) => s.theme);
   const { data } = useDistrictsGeo();
 
   useEffect(() => {

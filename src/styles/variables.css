@@ -1,0 +1,82 @@
+:root {
+  /* Colors — dark (default) */
+  --color-bg: #0f1419;
+  --color-bg-panel: #1a1f26;
+  --color-bg-elevated: #232a33;
+  --color-text: #e8eaed;
+  --color-text-muted: #9aa0a6;
+  --color-text-dim: #5f6368;
+  --color-border: #2d333b;
+  --color-accent: #d4a44a;
+  --color-accent-hover: #e5b85b;
+  --color-accent-contrast: #1a120a;
+  --color-danger: #e57373;
+  --color-success: #81c784;
+
+  /* Map */
+  --color-district-fill: rgba(212, 164, 74, 0.08);
+  --color-district-fill-hover: rgba(212, 164, 74, 0.25);
+  --color-district-fill-active: rgba(212, 164, 74, 0.4);
+  --color-district-outline: #d4a44a;
+  --color-neighbor-fill: rgba(80, 80, 80, 0.35);
+  --color-neighbor-outline: rgba(120, 120, 120, 0.4);
+
+  /* Marker shadow halo (used by .marker-* to stand out from districts) */
+  --marker-halo: rgba(15, 20, 25, 0.55);
+
+  /* Typography */
+  --font-sans: 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-display: 'TD Izbushka', 'SF Pro Display', serif;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  /* Z-index */
+  --z-map: 1;
+  --z-map-controls: 10;
+  --z-panel: 100;
+  --z-modal: 1000;
+}
+
+[data-theme="light"] {
+  --color-bg: #f5f6f8;
+  --color-bg-panel: #ffffff;
+  --color-bg-elevated: #f0f1f4;
+  --color-text: #1a1f26;
+  --color-text-muted: #5f6368;
+  --color-text-dim: #9aa0a6;
+  --color-border: #e2e5ea;
+  --color-accent: #b58236;
+  --color-accent-hover: #d4a44a;
+  --color-accent-contrast: #ffffff;
+
+  --color-district-fill: rgba(181, 130, 54, 0.08);
+  --color-district-fill-hover: rgba(181, 130, 54, 0.22);
+  --color-district-fill-active: rgba(181, 130, 54, 0.4);
+  --color-district-outline: #b58236;
+  --color-neighbor-fill: rgba(150, 150, 150, 0.18);
+  --color-neighbor-outline: rgba(120, 120, 120, 0.4);
+
+  --marker-halo: rgba(255, 255, 255, 0.7);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+}

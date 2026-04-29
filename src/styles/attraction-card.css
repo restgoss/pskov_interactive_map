@@ -1,0 +1,253 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  animation: fade-in 0.2s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.attraction-card {
+  background: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 760px;
+  max-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===== Header (image) ===== */
+.attraction-card__header {
+  position: relative;
+  height: 280px;
+  background: var(--color-bg-elevated);
+  flex-shrink: 0;
+}
+
+.attraction-card__image-btn {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+  overflow: hidden;
+}
+
+.attraction-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.attraction-card__image-btn:hover .attraction-card__image {
+  transform: scale(1.03);
+}
+
+.attraction-card__image--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 72px;
+  color: var(--color-accent);
+}
+
+/* All cosmetic styling lives in .icon-btn (buttons.css). This selector
+   only handles where the close lives in the layout. */
+.attraction-card__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+}
+
+/* ===== Body — single scroll container ===== */
+.attraction-card__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.attraction-card__title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--color-accent);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.attraction-card__summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.attraction-card__avg {
+  font-weight: 700;
+  color: var(--color-text);
+  font-size: 14px;
+}
+
+.attraction-card__count::before { content: '· '; }
+
+.attraction-card__description {
+  color: var(--color-text);
+  line-height: 1.6;
+  margin: 0;
+  font-size: 14px;
+}
+
+/* ===== Reviews section ===== */
+.attraction-card__reviews {
+  margin-top: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-4);
+}
+
+.attraction-card__reviews-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.attraction-card__section-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-text-dim);
+  margin: 0;
+}
+
+.attraction-card__write-btn {
+  flex-shrink: 0;
+}
+
+.attraction-card__form-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.attraction-card__form-cancel {
+  align-self: flex-end;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.reviews-list__empty {
+  color: var(--color-text-dim);
+  font-size: 13px;
+  font-style: italic;
+  padding: var(--space-3);
+  text-align: center;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-sm);
+}
+
+.review {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+.review__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-1);
+  gap: var(--space-3);
+}
+
+.review__author {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.review__date {
+  font-size: 12px;
+  color: var(--color-text-dim);
+}
+
+.review__rating {
+  display: flex;
+  gap: 2px;
+  margin-bottom: var(--space-2);
+}
+
+.review__text {
+  color: var(--color-text);
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+.review__photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.review__photo {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.12s ease, border-color 0.15s ease;
+}
+
+.review__photo:hover {
+  transform: scale(1.04);
+  border-color: var(--color-accent);
+}
+
+.review__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.star {
+  color: var(--color-text-dim);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.star--filled {
+  color: var(--color-accent);
+}

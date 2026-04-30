@@ -5,6 +5,7 @@ import { useReviews } from '@/hooks/useReviews';
 import { Stars } from './Stars';
 import { ReviewForm } from './ReviewForm';
 import { Lightbox } from './Lightbox';
+import { asset } from '@/lib/assets';
 
 interface LightboxState {
   urls: string[];
@@ -52,12 +53,14 @@ export function AttractionCard() {
             <button
               type="button"
               className="attraction-card__image-btn"
-              onClick={() => setLightbox({ urls: [attraction.image_url!], index: 0 })}
+              onClick={() =>
+                setLightbox({ urls: [asset(attraction.image_url!)], index: 0 })
+              }
               aria-label="Открыть фото на весь экран"
             >
               <img
                 className="attraction-card__image"
-                src={attraction.image_url}
+                src={asset(attraction.image_url)}
                 alt={attraction.title}
               />
             </button>

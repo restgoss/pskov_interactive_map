@@ -67,7 +67,7 @@ export function DistrictPanel() {
                     onClick={() => setSelectedAttraction(a.id)}
                   >
                     {a.image_url ? (
-                      <img className="attraction-item__image" src={a.image_url} alt={a.title} loading="lazy" />
+                      <img className="attraction-item__image" src={asset(a.image_url)} alt={a.title} loading="lazy" />
                     ) : (
                       <div className="attraction-item__image attraction-item__image--placeholder">
                         {a.title.charAt(0)}

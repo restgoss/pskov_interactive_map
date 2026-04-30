@@ -3,6 +3,7 @@ import maplibregl, { type Map as MlMap } from 'maplibre-gl';
 import { useAttractions } from '@/hooks/useAttractions';
 import { useDistrictsGeo } from '@/hooks/useDistrictsGeo';
 import { useUiStore } from '@/store/uiStore';
+import { asset } from '@/lib/assets';
 import type { Attraction, DistrictId } from '@/types';
 
 // Below this zoom we show distance-based clusters; at or above it, individual
@@ -67,7 +68,7 @@ function buildPointEl(a: Attraction & { lng: number; lat: number }): HTMLDivElem
   if (a.image_url) {
     const img = document.createElement('img');
     img.className = 'marker-point__img';
-    img.src = a.image_url;
+    img.src = asset(a.image_url);
     img.alt = a.title;
     img.loading = 'lazy';
     img.decoding = 'async';

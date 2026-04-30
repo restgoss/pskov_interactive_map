@@ -16,6 +16,14 @@ const POINT_MIN_ZOOM = 11;
 // enough — we don't need geodesic precision for a marker grouping heuristic).
 const CLUSTER_RADIUS_DEG = 0.12;
 
+// Mobile zoom-on-tap behaviour — phone screens are too small to read a card
+// half-occluded by a faraway marker, so we fly the camera in close before
+// opening anything. The breakpoint matches the CSS @media in the layout.
+const MOBILE_QUERY = '(max-width: 768px)';
+const MOBILE_POINT_ZOOM = 15;
+const isMobile = () =>
+  typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches;
+
 interface Props {
   map: MlMap | null;
   isStyleLoaded: boolean;
@@ -156,8 +164,13 @@ export function AttractionsLayer({ map, isStyleLoaded }: Props) {
 
       const inner = buildClusterEl(c.points.length);
       inner.addEventListener('click', () => {
-        if (dominant) setSelectedDistrict(dominant);
-        map.flyTo({ center: c.center, zoom: POINT_MIN_ZOOM + 0.5 });
+        // On desktop a cluster tap also opens the district panel for the
+        // dominant district — useful context next to the map. On mobile
+        // the panel covers the map and gets in the way after zooming, so
+        // we only fly the camera in.
+        if (!isMobile() && dominant) setSelectedDistrict(dominant);
+        const targetZoom = isMobile() ? MOBILE_POINT_ZOOM : POINT_MIN_ZOOM + 0.5;
+        map.flyTo({ center: c.center, zoom: targetZoom });
       });
       const wrapper = wrapMarker(inner);
       wrapper.style.visibility = 'hidden';
@@ -176,7 +189,14 @@ export function AttractionsLayer({ map, isStyleLoaded }: Props) {
     for (const c of clusters) {
       for (const a of c.points) {
         const inner = buildPointEl(a);
-        inner.addEventListener('click', () => setSelectedAttraction(a.id));
+        inner.addEventListener('click', () => {
+          // Mobile UX: bring the camera in close to the tapped marker so the
+          // card opens with clear spatial context, not over a tiny dot.
+          if (isMobile()) {
+            map.flyTo({ center: [a.lng, a.lat], zoom: MOBILE_POINT_ZOOM });
+          }
+          setSelectedAttraction(a.id);
+        });
         const wrapper = wrapMarker(inner);
         wrapper.style.visibility = 'hidden';
         const marker = new maplibregl.Marker({ element: wrapper, anchor: 'center' })

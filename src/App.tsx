@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { MapView } from '@/components/Map/MapView';
 import { MapSettings } from '@/components/Map/MapSettings';
+// import { AttractionsButton } from '@/components/Map/AttractionsButton';
 import { DistrictPanel } from '@/components/DistrictPanel';
 import { AttractionCard } from '@/components/AttractionCard';
 import { AppLoader } from '@/components/AppLoader';
@@ -36,6 +37,7 @@ export function App() {
 
       <MapView />
       <MapSettings />
+      {/* <AttractionsButton /> */}
       <DistrictPanel />
       <AttractionCard />
       <AppLoader />

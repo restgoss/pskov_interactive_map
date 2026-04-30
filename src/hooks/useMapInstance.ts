@@ -44,7 +44,9 @@ export function useMapInstance(): UseMapInstanceResult {
       // Format: [[west, south], [east, north]].
       // Symmetric east/west around Pskov (lng 28.34) — half-width 13.66°.
       maxBounds: [[14.68, 48.0], [42.0, 64.0]],
-      attributionControl: { compact: true },
+      // No attribution chip — the OpenFreeMap / OpenStreetMap notice
+      // crowds the corner of a UI that's already busy with our own panels.
+      attributionControl: false,
     });
 
     instance.addControl(new maplibregl.NavigationControl({ visualizePitch: false }), 'bottom-right');

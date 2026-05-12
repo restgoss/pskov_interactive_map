@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { DISTRICT_BY_NAME } from '@/config/districts';
 import { asset } from '@/lib/assets';
+import { fetchDistricts } from '@/api/districts';
 import type { DistrictId } from '@/types';
 
 export interface DistrictFeatureProperties {
@@ -43,9 +44,18 @@ function bboxCenter(geom: GeoJSON.Geometry): [number, number] {
 }
 
 async function fetchDistrictsGeo(): Promise<DistrictsGeoData> {
-  const res = await fetch(asset('geo/pskov-districts.geojson'));
-  if (!res.ok) throw new Error(`Failed to load districts geojson: ${res.status}`);
-  const raw = (await res.json()) as GeoJSON.FeatureCollection;
+  // Pull geometry and DB metadata in parallel — neither blocks the other.
+  const [geojsonRes, dbDistricts] = await Promise.all([
+    fetch(asset('geo/pskov-districts.geojson')),
+    fetchDistricts(),
+  ]);
+  if (!geojsonRes.ok) throw new Error(`Failed to load districts geojson: ${geojsonRes.status}`);
+  const raw = (await geojsonRes.json()) as GeoJSON.FeatureCollection;
+
+  // is_disabled lives in the DB (editable via the admin). The geojson's
+  // `isDisabled` is a stale fallback — DB wins whenever a row exists.
+  const dbDisabledBySlug = new Map<string, boolean>();
+  for (const d of dbDistricts) dbDisabledBySlug.set(d.id, d.is_disabled);
 
   const centroidBySlug = new Map<DistrictId, [number, number]>();
   const disabledSlugs = new Set<DistrictId>();
@@ -54,7 +64,10 @@ async function fetchDistrictsGeo(): Promise<DistrictsGeoData> {
     const props = (f.properties ?? {}) as { district?: string; isDisabled?: boolean };
     const name = props.district ?? '';
     const slug = (DISTRICT_BY_NAME[name] ?? null) as DistrictId | null;
-    const isDisabled = props.isDisabled ?? false;
+    // Prefer the DB flag; only fall back to the geojson when the DB has no
+    // matching row (shouldn't happen, but keeps the map robust).
+    const dbFlag = slug ? dbDisabledBySlug.get(slug) : undefined;
+    const isDisabled = dbFlag !== undefined ? dbFlag : (props.isDisabled ?? false);
     const centroid = bboxCenter(f.geometry);
     if (slug) {
       centroidBySlug.set(slug, centroid);
@@ -74,6 +87,7 @@ export function useDistrictsGeo() {
   return useQuery({
     queryKey: ['districts-geo'],
     queryFn: fetchDistrictsGeo,
-    staleTime: Infinity,
+    // No infinite staleness any more — DB flags can change. Default 5 min cache.
+    staleTime: 5 * 60_000,
   });
 }
